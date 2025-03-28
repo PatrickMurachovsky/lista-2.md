@@ -263,21 +263,69 @@ Pedidos entre R$50,00 e R$199,99 (inclusive) → "Frete com custo adicional!"
 Pedidos de R$200,00 ou mais → "Frete grátis!"
 ```
 Implemente um pseudocódigo que receba o valor total da compra e exiba a classificação correta do frete para o cliente.
+
+function classificarFrete(valorTotalCompra) {
+    if (valorTotalCompra < 50.00) {
+        console.log("Frete não disponível!");
+    } else if (valorTotalCompra >= 50.00 && valorTotalCompra <= 199.99) {
+        console.log("Frete com custo adicional!");
+    } else {
+        console.log("Frete grátis!");
+    }
+}
+
+let valorCompra = 150.00;  // Substitua este valor para testar
+classificarFrete(valorCompra);✅✅✅✅
+
 ______
 
 **8)** Considere a implementação da classe base Veiculo em um sistema de modelagem de veículos. Sua tarefa é implementar, utilizando pseudocódigo, as classes derivadas Carro e Moto, que herdam da classe Veiculo, adicionando atributos específicos e métodos para calcular o consumo de combustível de um carro e de uma moto, respectivamente.
 
-```
-Classe Veiculo:
-Atributos:
+**// Classe base Veiculo**
+class Veiculo {
+    constructor(modelo, ano, combustivel) {
+        this.modelo = modelo;
+        this.ano = ano;
+        this.combustivel = combustivel;
+    }
+}
 
-modelo
-ano
-Método Construtor(modelo, ano):
+// Classe Carro, que herda de Veiculo
+class Carro extends Veiculo {
+    constructor(modelo, ano, combustivel, consumoPorKm) {
+        super(modelo, ano, combustivel);
+        this.consumoPorKm = consumoPorKm;
+    }
 
-Define os valores dos atributos modelo e ano com os valores passados como parâmetro.
-Método CalcularConsumo():
-```
+    // Método para calcular o consumo de combustível do carro
+    calcularConsumo(distancia) {
+        return distancia * this.consumoPorKm;
+    }
+}
+
+// Classe Moto, que herda de Veiculo
+class Moto extends Veiculo {
+    constructor(modelo, ano, combustivel, consumoPorKm) {
+        super(modelo, ano, combustivel);
+        this.consumoPorKm = consumoPorKm;
+    }
+
+    // Método para calcular o consumo de combustível da moto
+    calcularConsumo(distancia) {
+        return distancia * this.consumoPorKm;
+    }
+}✅✅✅✅
+
+// Exemplo de uso:
+
+// Criando um carro
+const carro = new Carro("Fusca", 1979, "Gasolina", 0.12);
+console.log(`Consumo de combustível do carro para 100 km: ${carro.calcularConsumo(100)} litros`);
+
+// Criando uma moto
+const moto = new Moto("Honda CG", 2022, "Gasolina", 0.05);
+console.log(`Consumo de combustível da moto para 100 km: ${moto.calcularConsumo(100)} litros`);**
+
 Implementação genérica para cálculo de consumo, a ser sobrescrita pelas subclasses.
 Agora, implemente as classes Carro e Moto, garantindo que ambas herdem de Veiculo e possuam métodos específicos para calcular o consumo de combustível com base na quilometragem e eficiência do veículo.
 ______
@@ -293,6 +341,15 @@ Considere a fórumla de atualização velocidade:
     velocidade = velocidadeInicial - desaceleracao * tempo
 ```
 Seu programa deve determinar quanto tempo será necessário para que a sonda atinja uma velocidade segura de pouso, sem ultrapassar os limites estabelecidos.
+
+function calcularDesaceleracao(velocidadeInicial, desaceleracaoMaxima, tempoMaximo) {
+    let tempo = Math.min(velocidadeInicial / desaceleracaoMaxima, tempoMaximo);
+    let velocidadeFinal = velocidadeInicial - desaceleracaoMaxima * tempo;
+    console.log(`Tempo: ${tempo}s. Velocidade final: ${Math.max(velocidadeFinal, 0)} km/h`);
+}
+
+calcularDesaceleracao(2000 * 1000 / 3600, 5, 300);  // Velocidade inicial em m/s, desaceleração em m/s², tempo máximo em segundos✅✅✅✅
+
 ______
 
 **10)** Em um sistema de análise financeira, as operações de investimento de uma empresa podem ser representadas por matrizes, onde cada linha representa um tipo de investimento e cada coluna representa um período de tempo.
@@ -325,3 +382,26 @@ Escrever("Total de investimentos acumulados:")
 ImprimirMatriz(totalInvestimentos)  
 ```
 Agora, implemente a função MultiplicarMatrizesInvestimento(matrizA, matrizB), que multiplica as duas matrizes, simulando o efeito de diferentes fatores de crescimento e impacto financeiro nos investimentos ao longo do tempo.
+
+function MultiplicarMatrizesInvestimento(matrizA, matrizB) {
+    if (matrizA[0].length !== matrizB.length) return "As matrizes não podem ser multiplicadas.";
+
+    let linhasA = matrizA.length, colunasB = matrizB[0].length;
+    let resultado = Array.from({ length: linhasA }, () => Array(colunasB).fill(0));
+
+    for (let i = 0; i < linhasA; i++) {
+        for (let j = 0; j < colunasB; j++) {
+            for (let k = 0; k < matrizA[0].length; k++) {
+                resultado[i][j] += matrizA[i][k] * matrizB[k][j];
+            }
+        }
+    }
+    return resultado;
+}
+
+// Exemplo de uso
+let investimentosAno1 = [[1000, 2000], [1500, 2500]];
+let fatoresCrescimento = [[1.05, 1.02], [1.03, 1.04]];
+
+console.log(MultiplicarMatrizesInvestimento(investimentosAno1, fatoresCrescimento));✅✅✅✅
+
